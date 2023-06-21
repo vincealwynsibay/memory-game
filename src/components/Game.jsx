@@ -31,6 +31,7 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
 
       return array;
     }
+
     arr = shuffle(arr);
 
     setCards(arr);
@@ -60,12 +61,7 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
           1000
         );
       } else {
-        let isWin = true;
-        for (let i = 0; i < cards.length; i++) {
-          if (!cards[i].isVisible) {
-            isWin = false;
-          }
-        }
+        const isWin = isWinner();
         setGameState(isWin ? "winner" : null);
       }
 
@@ -101,6 +97,17 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
     if (valid) {
       setSelectedCards((c) => [...c, card]);
     }
+  };
+
+  const isWinner = () => {
+    let isWin = true;
+    for (let i = 0; i < cards.length; i++) {
+      if (!cards[i].isVisible) {
+        isWin = false;
+      }
+    }
+
+    return isWin;
   };
 
   const handleCheck = () => {

@@ -4,13 +4,8 @@ import Game from "./components/Game";
 import SelectDifficulty from "./components/SelectDifficulty";
 
 function App() {
-  const [difficulty, setDifficulty] = useState(null);
   const [gameState, setGameState] = useState(null);
-
-  const handleDifficulty = (num) => {
-    setDifficulty(() => num);
-  };
-
+  const [difficulty, setDifficulty] = useState(null);
   const [duration, setDuration] = useState(10);
 
   useEffect(() => {
@@ -20,7 +15,6 @@ function App() {
       setDuration((prevDuration) => prevDuration - 1);
     }, 1000);
 
-    // Clear the interval when component unmounts
     return () => clearInterval(timer);
   }, [difficulty, gameState]);
 
@@ -30,11 +24,21 @@ function App() {
     }
   }, [duration]);
 
+  const handleDifficulty = (num) => {
+    setDifficulty(() => num);
+  };
+
   return (
     <div>
       <h1>Welcome to Memory Game!</h1>
-      {difficulty && <p>{duration}</p>}
-      {!difficulty && <SelectDifficulty handleDifficulty={handleDifficulty} />}
+
+      <div>
+        {difficulty && <p>{duration}</p>}
+        {!difficulty && (
+          <SelectDifficulty handleDifficulty={handleDifficulty} />
+        )}
+      </div>
+
       {difficulty && (
         <Game
           n={difficulty.n}
