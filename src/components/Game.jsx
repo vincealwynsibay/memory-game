@@ -49,10 +49,10 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
             setCards((cs) => {
               return cs.map((c) => {
                 setGameState(null);
-                if (c.id === selectedCards[0].id) {
+                if (c.id === selectedCards[0]) {
                   return { ...c, isVisible: false };
                 }
-                if (c.id === selectedCards[1].id) {
+                if (c.id === selectedCards[1]) {
                   return { ...c, isVisible: false };
                 }
                 return c;
@@ -76,7 +76,7 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
 
     // check if the clicked card is not already selected
     for (let i = 0; i < selectedCards.length; i++) {
-      if (card.id === selectedCards[i].id) {
+      if (card.id === selectedCards[i]) {
         valid = false;
       }
     }
@@ -95,7 +95,7 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
     }
 
     if (valid) {
-      setSelectedCards((c) => [...c, card]);
+      setSelectedCards((c) => [...c, card.id]);
     }
   };
 
@@ -112,15 +112,19 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
 
   const handleCheck = () => {
     let valid = false;
-    if (selectedCards[0].value === selectedCards[1].value) {
+
+    const card1 = cards.find((c) => c.id === selectedCards[0]);
+    const card2 = cards.find((c) => c.id === selectedCards[1]);
+
+    if (card1.value === card2.value) {
       valid = true;
       setCards((cs) => {
         return cs.map((c) => {
-          if (c.id == selectedCards[0].id) {
+          if (c.id == selectedCards[0]) {
             return { ...c, isVisible: true };
           }
 
-          if (c.id == selectedCards[1].id) {
+          if (c.id == selectedCards[1]) {
             return { ...c, isVisible: true };
           }
 
