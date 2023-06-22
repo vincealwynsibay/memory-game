@@ -44,25 +44,23 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
 
       if (!valid) {
         // update the is visible property of the clicked card
-        setTimeout(
-          () =>
-            setCards((cs) => {
-              return cs.map((c) => {
-                setGameState(null);
-                if (c.id === selectedCards[0]) {
-                  return { ...c, isVisible: false };
-                }
-                if (c.id === selectedCards[1]) {
-                  return { ...c, isVisible: false };
-                }
-                return c;
-              });
-            }),
-          1000
-        );
+        setTimeout(() => {
+          setCards((cs) => {
+            return cs.map((c) => {
+              if (c.id === selectedCards[0]) {
+                return { ...c, isVisible: false };
+              }
+              if (c.id === selectedCards[1]) {
+                return { ...c, isVisible: false };
+              }
+              return c;
+            });
+          });
+          setGameState("playing");
+        }, 1000);
       } else {
         const isWin = isWinner();
-        setGameState(isWin ? "winner" : null);
+        setGameState(isWin ? "winner" : "playing");
       }
 
       setSelectedCards([]);
@@ -70,7 +68,7 @@ function Game({ n, handleDifficulty, gameState, setGameState, duration }) {
   }, [selectedCards]);
 
   const handleClick = (card) => {
-    if (gameState) return;
+    if (gameState === "checking") return;
 
     let valid = true;
 

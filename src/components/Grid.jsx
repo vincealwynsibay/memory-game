@@ -9,7 +9,7 @@ function Grid({ cards, handleClick }) {
 
     // cards length needs to be a perfect square
     if (i > 0 && (i + 1) % Math.sqrt(cards.length) == 0) {
-      grid.current.push(group);
+      grid.push(group);
       group = [];
     }
   }

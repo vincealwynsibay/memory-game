@@ -10,7 +10,11 @@ function App() {
 
   useEffect(() => {
     if (!difficulty || gameState === "winner") return;
-    setDuration(difficulty.duration);
+
+    if (!gameState) {
+      setDuration(() => difficulty.duration);
+    }
+
     const timer = setInterval(() => {
       setDuration((prevDuration) => prevDuration - 1);
     }, 1000);
